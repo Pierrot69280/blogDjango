@@ -1,8 +1,25 @@
-<h1>Articles</h1>
-<ul>
-    {% for article in articles %}
-        <li>
-            <a href="{% url 'article_show' article.id %}">{{ article.title }}</a>
-        </li>
-    {% endfor %}
-</ul>
+{% extends 'website/base.html' %}
+
+{% block title %}Articles{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Articles</h1>
+    <ul class="list-group">
+        {% for article in articles %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <a href="{% url 'article_show' article.id %}" class="text-decoration-none text-dark fw-bold">
+                        {{ article.title }}
+                    </a>
+                </div>
+                <div>
+                    <a href="{% url 'article_delete' article.id %}" class="btn btn-sm btn-danger">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
