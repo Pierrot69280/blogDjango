@@ -37,5 +37,4 @@ def article_edit(request, article_id):
             return redirect('article_index')
     else:
         articleForm = ArticleForm(instance=article)
-
     return render(request, "website/articles/edit.html", {"articleForm": articleForm})
