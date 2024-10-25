@@ -19,7 +19,7 @@ def article_delete(request, article_id):
 
 def article_create(request):
     if request.method == "POST":
-        articleForm = ArticleForm(request.POST)
+        articleForm = ArticleForm(request.POST, request.FILES)
         if articleForm.is_valid():
             articleForm.save()
             return redirect('article_index')
@@ -27,19 +27,16 @@ def article_create(request):
         articleForm = ArticleForm()
     return render(request, "website/articles/create.html", {"articleForm": articleForm})
 
-
 def article_edit(request, article_id):
     article = get_object_or_404(Article, id=article_id)
-
     if request.method == "POST":
-        articleForm = ArticleForm(request.POST, instance=article)
+        articleForm = ArticleForm(request.POST, request.FILES, instance=article)
         if articleForm.is_valid():
             articleForm.save()
             return redirect('article_index')
     else:
         articleForm = ArticleForm(instance=article)
     return render(request, "website/articles/edit.html", {"articleForm": articleForm, "article": article})
-
 
 def user_signup(request):
     if request.method == 'POST':

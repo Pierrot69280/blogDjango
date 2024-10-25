@@ -4,23 +4,36 @@
 
 {% block content %}
     <div class="container mt-5">
-        <form action="{% url 'article_create' %}" method="post">
-            {% csrf_token %}
-            <div class="card p-4 shadow-sm">
-                <h2 class="mb-4">Create an Article</h2>
+        <div class="card shadow-sm border-0 p-4">
+            <h2 class="mb-4 text-center display-6 fw-bold">Create an Article</h2>
+            <form action="{% url 'article_create' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
 
-                <div class="form-group mb-3">
-                    <label for="id_title" class="form-label">Title:</label>
-                    <input type="text" name="title" id="id_title" class="form-control" required>
+                <div class="mb-4">
+                    <label for="id_title" class="form-label fw-semibold">Title:</label>
+                    <input type="text" name="title" id="id_title" class="form-control shadow-sm" placeholder="Enter the article title" required>
                 </div>
 
-                <div class="form-group mb-3">
-                    <label for="id_description" class="form-label">Description:</label>
-                    <textarea name="description" id="id_description" rows="5" class="form-control" required></textarea>
+                <div class="mb-4">
+                    <label for="id_description" class="form-label fw-semibold">Description:</label>
+                    <textarea name="description" id="id_description" rows="5" class="form-control shadow-sm" placeholder="Enter the article description" required></textarea>
                 </div>
 
-                <button type="submit" class="btn btn-primary mt-3 w-100">Submit</button>
-            </div>
-        </form>
+                <div class="mb-4">
+                    <label for="id_image" class="form-label fw-semibold">Image:</label>
+                    <input type="file" name="image" id="id_image" class="form-control shadow-sm">
+                </div>
+
+                <button type="submit" class="btn btn-success w-100 py-2 shadow-sm">
+                    <i class="fas fa-paper-plane me-2"></i> Submit Article
+                </button>
+            </form>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'article_index' %}" class="btn btn-outline-secondary shadow-sm">
+                <i class="fas fa-arrow-left me-2"></i> Back to Articles
+            </a>
+        </div>
     </div>
 {% endblock %}

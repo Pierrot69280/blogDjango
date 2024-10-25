@@ -4,28 +4,47 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h1 class="mb-4">Articles</h1>
-    <ul class="list-group">
-        {% for article in articles %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                    <a href="{% url 'article_show' article.id %}" class="text-decoration-none text-dark fw-bold">
-                        {{ article.title }}
-                    </a>
-                </div>
-                <div>
-                    <a href="{% url 'article_edit' article_id=article.id %}" class="btn btn-warning btn-sm me-2">
-                        <i class="fas fa-edit"></i> Edit
-                    </a>
-                    <a href="{% url 'article_delete' article.id %}" class="btn btn-danger btn-sm">
-                        <i class="fas fa-trash-alt"></i> Delete
-                    </a>
-                </div>
-            </li>
-        {% endfor %}
-    </ul>
-    <div class="mt-4">
-        <a href="{% url 'article_create' %}" class="btn btn-primary">Create New Article</a>
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Articles</h1>
+        <p class="lead text-muted">Discover and manage your articles effortlessly</p>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                {% for article in articles %}
+                    <li class="list-group-item py-4 d-flex justify-content-between align-items-center">
+                        <div class="d-flex">
+                            {% if article.image %}
+                                <img src="{{ article.image.url }}" alt="Article Image" class="rounded me-3 shadow-sm" style="width: 100px; height: 100px; object-fit: cover;">
+                            {% endif %}
+                            <div>
+                                <h5 class="mb-1">
+                                    <a href="{% url 'article_show' article.id %}" class="text-decoration-none text-primary fw-bold">
+                                        {{ article.title }}
+                                    </a>
+                                </h5>
+                                <p class="text-muted mb-0">{{ article.summary|default_if_none:"No summary available" }}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <a href="{% url 'article_edit' article_id=article.id %}" class="btn btn-outline-warning btn-sm me-2">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a href="{% url 'article_delete' article.id %}" class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <a href="{% url 'article_create' %}" class="btn btn-primary btn-lg shadow-sm">
+            <i class="fas fa-plus-circle"></i> Create New Article
+        </a>
     </div>
 </div>
 {% endblock %}
