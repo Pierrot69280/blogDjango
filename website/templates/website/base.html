@@ -9,18 +9,19 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
 </head>
-<body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+<body class="bg-dark bg-gradient">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="#">Blog</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand fw-bold" href="#">Blog</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'article_index' %}">Articles</a>
+                        <a class="nav-link active" href="{% url 'article_index' %}">Articles</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
@@ -30,17 +31,17 @@
                 <ul class="navbar-nav ms-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link text-danger" href="#">Welcome, {{ user.username }}</a>
+                            <a class="nav-link text-success" href="#">Welcome, <strong>{{ user.username }}</strong></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                            <a class="nav-link btn btn-outline-secondary btn-sm ms-2" href="{% url 'logout' %}">Logout</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                            <a class="nav-link btn btn-outline-primary btn-sm" href="{% url 'login' %}">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'signup' %}">Register</a>
+                            <a class="nav-link btn btn-primary btn-sm ms-2" href="{% url 'signup' %}">Register</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -49,8 +50,12 @@
     </nav>
 
     <div class="container">
-        {% block content %}
-        {% endblock %}
+        <div class="row">
+            <div class="col">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
     </div>
 
 </body>
