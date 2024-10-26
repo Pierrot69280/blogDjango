@@ -28,23 +28,32 @@
                             </div>
                         </div>
                         <div class="d-flex">
-                            <a href="{% url 'article_edit' article_id=article.id %}" class="btn btn-outline-warning btn-sm me-2">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
-                            <a href="{% url 'article_delete' article.id %}" class="btn btn-outline-danger btn-sm">
-                                <i class="fas fa-trash-alt"></i> Delete
-                            </a>
+                            {% if article.author == user %}
+                                <a href="{% url 'article_edit' article_id=article.id %}" class="btn btn-outline-warning btn-sm me-2">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a href="{% url 'article_delete' article.id %}" class="btn btn-outline-danger btn-sm">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </a>
+                            {% endif %}
                         </div>
                     </li>
+                    <p class="text-muted mt-3">Published on {{ article.created_at|date:"d/m/Y H:i" }} by {{ article.author.username }}</p>
                 {% endfor %}
             </ul>
         </div>
     </div>
 
-    <div class="text-center mt-5">
-        <a href="{% url 'article_create' %}" class="btn btn-primary btn-lg shadow-sm">
-            <i class="fas fa-plus-circle"></i> Create New Article
-        </a>
-    </div>
+    {% if user.is_authenticated %}
+        <div class="text-center mt-5">
+            <a href="{% url 'article_create' %}" class="btn btn-primary btn-lg shadow-sm">
+                <i class="fas fa-plus-circle"></i> Create a New Article
+            </a>
+        </div>
+    {% else %}
+        <div class="alert alert-warning text-center mt-5">
+            Please <a href="{% url 'login' %}" class="alert-link">log in</a> to create a new article.
+        </div>
+    {% endif %}
 </div>
 {% endblock %}

@@ -38,14 +38,17 @@ def comment_delete(request, comment_id):
 
 def article_delete(request, article_id):
     article = get_object_or_404(Article, id=article_id)
-    article.delete()
+    if article.author == request.user:
+        article.delete()
     return redirect('article_index')
 
 def article_create(request):
     if request.method == "POST":
         articleForm = ArticleForm(request.POST, request.FILES)
         if articleForm.is_valid():
-            articleForm.save()
+            article = articleForm.save(commit=False)
+            article.author = request.user
+            article.save()
             return redirect('article_index')
     else:
         articleForm = ArticleForm()
@@ -53,6 +56,9 @@ def article_create(request):
 
 def article_edit(request, article_id):
     article = get_object_or_404(Article, id=article_id)
+    if article.author != request.user:
+        return redirect('article_index')
+
     if request.method == "POST":
         articleForm = ArticleForm(request.POST, request.FILES, instance=article)
         if articleForm.is_valid():
@@ -61,7 +67,6 @@ def article_edit(request, article_id):
     else:
         articleForm = ArticleForm(instance=article)
     return render(request, "website/articles/edit.html", {"articleForm": articleForm, "article": article})
-
 
 def user_signup(request):
     if request.method == 'POST':
